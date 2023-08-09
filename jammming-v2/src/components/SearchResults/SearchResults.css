@@ -1,7 +1,10 @@
 .SearchResults {
-    /* Allow y scroll and fix height to window height minus header height */
+    flex-basis: 40%;
+    min-width: 300px;
     overflow-y: scroll;
     height: calc(100vh - 300px);
     border: 2px solid black;
     padding: 10px;
+    margin: 10px;
+    width: 300px;
 }

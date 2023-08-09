@@ -1,3 +1,16 @@
 .SearchBar {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.SearchBar input {
+    width: 40%;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 10px;
+    text-align: center;
 }
