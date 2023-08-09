@@ -22,3 +22,10 @@ h1 {
 .highlight {
   color: #9df89b;
 }
+
+.App-playlist {
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 50px;
+}

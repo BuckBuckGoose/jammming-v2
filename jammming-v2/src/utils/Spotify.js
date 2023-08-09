@@ -10,6 +10,7 @@ const Spotify = {
 
     getAccessToken() {
         if(accessToken) {
+            console.log('Access token found' + accessToken);
             return accessToken;
         }
 
@@ -34,13 +35,18 @@ const Spotify = {
     },
 
     async search(term) {
+        if(!term){
+            alert("Please enter a search term.");
+            return [];
+        };
         // Get necessary access token
-        Spotify.getAccessToken();
+        const token = this.getAccessToken();
+        console.log("Search access token: " + token)
         // Request search for term from Spotify API
         const response = await axios.get(`${spotifyApiUrl}/search?type=track&q=${term}`, 
-            { headers: { Authorization: `Bearer ${accessToken}` } }
+            { headers: { Authorization: `Bearer ${token}` } }
         );
-        console.log('Spotify.js items: ' + JSON.stringify(response.data.tracks.items));
+        // If no tracks are returned, return an empty array
         if(!response.data.tracks.items){
             return [];
         }
@@ -57,24 +63,61 @@ const Spotify = {
             return responseArray;
         },
 
+    // Save playlist to user's Spotify account
     async savePlaylist(playlistName, trackUris) {
         if(!playlistName || trackUris.length === 0){
             return;
         }
+        if(trackUris.length > 100) {
+            alert("You can only add a maximum of 100 songs to a playlist at a time.");
+            return;
+        }
 
-        const accessToken = Spotify.getAccessToken();
-        const headers = { Authorization: `Bearer ${accessToken}` };
+        this.getAccessToken();
+        console.log("Save access token: " + accessToken);
+        const headers = { Authorization: `Bearer ${this.accessToken}` };
         let userId;
 
         // Get user ID
-        await axios.get(`${spotifyApiUrl}/me`, { headers: headers })
+        const userResponse = await axios.get(`${spotifyApiUrl}/me`, { headers: headers })
             .then((response) => {
                 userId = response.data.id;
             })
             .catch((error) => {
                 console.log(error.message);
+                return;
             });
         
+        
+        // Create new playlist and add songs
+        let playlistId;
+
+        await axios.post(`${spotifyApiUrl}/users/${userId}/playlists`, {
+            headers: headers,
+            body: JSON.stringify({ name: playlistName })
+        })
+        .then((response) => {
+            playlistId = response.data.id;
+        })
+        .catch((error) => {
+            console.log(error.message);
+            return;
+        });
+
+        await axios.post(`${spotifyApiUrl}/playlists/${playlistId}/tracks`, {
+            headers: headers,
+            uris: trackUris
+        })
+        .then((response) => {
+            console.log(response);
+            if(response.status === 201){
+                alert("Playlist successfully saved!");
+            };
+        })
+        .catch((error) => {
+            console.log(error.message);
+            return;
+        });
     }
 
 };
