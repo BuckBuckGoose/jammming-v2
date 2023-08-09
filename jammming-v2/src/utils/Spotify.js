@@ -29,7 +29,7 @@ const Spotify = {
             window.history.pushState("Access Token", null, "/");
         } else {
             // Redirect user to Spotify authorization page
-            const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUri}`;
+            const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=user-read-private%20user-read-email%20playlist-modify-public&redirect_uri=${redirectUri}`;
             window.location = accessUrl;
         }
     },
@@ -66,6 +66,7 @@ const Spotify = {
     // Save playlist to user's Spotify account
     async savePlaylist(playlistName, trackUris) {
         if(!playlistName || trackUris.length === 0){
+            alert("You must enter a playlist name and add songs to the playlist before saving.");
             return;
         }
         if(trackUris.length > 100) {
@@ -74,14 +75,18 @@ const Spotify = {
         }
 
         this.getAccessToken();
-        console.log("Save access token: " + accessToken);
-        const headers = { Authorization: `Bearer ${this.accessToken}` };
+        if(accessToken === undefined){
+            alert("You must log in to Spotify before saving a playlist.");
+            return;
+        }
+        const headers = { Authorization: `Bearer ${accessToken}` };
         let userId;
-
+        
         // Get user ID
         const userResponse = await axios.get(`${spotifyApiUrl}/me`, { headers: headers })
             .then((response) => {
                 userId = response.data.id;
+                alert(JSON.stringify(response.data));
             })
             .catch((error) => {
                 console.log(error.message);
@@ -91,7 +96,7 @@ const Spotify = {
         
         // Create new playlist and add songs
         let playlistId;
-
+        alert(JSON.stringify(headers));
         await axios.post(`${spotifyApiUrl}/users/${userId}/playlists`, {
             headers: headers,
             body: JSON.stringify({ name: playlistName })
@@ -115,6 +120,7 @@ const Spotify = {
             };
         })
         .catch((error) => {
+            alert(JSON.stringify(error));
             console.log(error.message);
             return;
         });

@@ -48,11 +48,16 @@ function App() {
     setPlaylistTracks([]);
   }, [playlistName, playlistTracks]);
 
+  const showToken = () => {
+    alert('App.js Access Token: ' + Spotify.getAccessToken());
+  };
+
   return (
     <div>
       <h1>
         Ja<span className="highlight">mmm</span>ing
       </h1>
+      <button onClick={showToken}>Get Access Token</button>
       <div className="App">
         <SearchBar onSearch={search}/>
         <div className="App-playlist">
