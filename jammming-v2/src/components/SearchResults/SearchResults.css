@@ -1,4 +1,6 @@
 .SearchResults {
+    display: flex;
+    flex-direction: column;
     flex-basis: 40%;
     min-width: 300px;
     overflow-y: scroll;

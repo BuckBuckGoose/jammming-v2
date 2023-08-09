@@ -1,4 +1,6 @@
 .Playlist {
+    display: flex;
+    flex-direction: column;
     flex-basis: 40%;
     min-width: 300px;
     overflow-y: scroll;
@@ -10,10 +12,16 @@
 }
 
 .Playlist input {
-    width: 85%;
+    /* center the input within the playlist */
+    width: 90%;
     padding: 10px;
     border: 1px solid black;
     border-radius: 5px;
     margin: 10px;
     text-align: center;
+    font-size: 1.5rem;
+}
+
+.Playlist-save {
+
 }

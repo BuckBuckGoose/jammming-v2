@@ -46,3 +46,25 @@ footer {
   padding: 10px;
   font-family: 'Borel', cursive;
 }
+
+button {
+  padding: 5px 5px 0px 5px;
+  background-color: green;
+  text-align: center;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Borel', cursive;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #9df89b;
+  color: black
+}
+
+button:active {
+  background-color: green;
+  color: black
+}
