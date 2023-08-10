@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const clientId = "6ba0055087c94b3cba47645625c0ad41";
-const redirectUri = "http://localhost:3000/";
+const redirectUri = "https://jammming.azurewebsites.net";
 const spotifyApiUrl = "https://api.spotify.com/v1";
 
 let accessToken;
