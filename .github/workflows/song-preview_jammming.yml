@@ -21,9 +21,6 @@ jobs:
         with:
           node-version: '18.x'
 
-      - name: Navigate to app directory
-        run: cd /home/runner/work/jammming-v2/jammming-v2/
-
       - name: npm install, build, and test
         run: |
           npm install
