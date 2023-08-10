@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import "./Track.css";
 
-const Track = ({onAdd, onRemove, track, isRemoval}) => {
+const Track = ({onAdd, onRemove, track, isRemoval, onPreview}) => {
   const addTrack = useCallback(
     (event) => {
       onAdd(track);
@@ -15,6 +15,14 @@ const Track = ({onAdd, onRemove, track, isRemoval}) => {
     },
     [onRemove, track]
   );
+
+  const previewTrack = useCallback(
+    (event) => {
+      onPreview(track);
+    },
+    [onPreview, track]
+  );
+    
 
   const renderButton = () => {
     if (isRemoval) {
@@ -34,7 +42,7 @@ const Track = ({onAdd, onRemove, track, isRemoval}) => {
 
   return (
     <div className="Track">
-      <div className="Track-info">
+      <div className="Track-info" onClick={previewTrack}>
         <h3>{track.name}</h3>
         <p>
           {track.artist} | {track.album}
