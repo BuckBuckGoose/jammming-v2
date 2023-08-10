@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/38831222-bdc8-46cd-8f8d-aeb259e3f997/resourceGroups/jammming2/providers/Microsoft.Web/sites/jammming",
+    "appService.deploySubpath": "."
+}
