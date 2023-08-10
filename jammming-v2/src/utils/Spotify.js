@@ -27,7 +27,7 @@ const Spotify = {
       window.history.pushState("Access Token", null, "/");
     } else {
       // Redirect user to Spotify authorization page
-      const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=user-read-private%20user-read-email%20playlist-modify-public&redirect_uri=${redirectUri}`;
+      const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=user-read-private%20user-read-email%20playlist-modify-public%20user-modify-playback-state&redirect_uri=${redirectUri}`;
       window.location = accessUrl;
     }
   },
@@ -55,6 +55,7 @@ const Spotify = {
         artist: track.artists[0].name,
         album: track.album.name,
         uri: track.uri,
+        albumArt: track.album.images[0].url,
       };
       return newTrack;
     });
@@ -127,6 +128,22 @@ const Spotify = {
         console.log(error.message);
         return;
       });
+  },
+
+  async play(songUri) {
+    await axios.put(
+      `${spotifyApiUrl}/me/player/play`,
+      { uris: [songUri] },
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+    );
+  },
+
+  async pause() {
+    await axios.put(
+      `${spotifyApiUrl}/me/player/pause`,
+      {},
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+    );
   },
 };
 

@@ -17,6 +17,7 @@ const Playlist = (props) => {
         tracks={props.playlistTracks}
         onRemove={props.onRemove}
         isRemoval={true}
+        onPreview={props.onPreview}
       />
     </div>
   );
